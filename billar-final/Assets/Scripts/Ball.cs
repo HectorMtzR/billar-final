@@ -19,7 +19,7 @@ public class Ball : MonoBehaviour
     }
 
     public void BallSetup(bool red){
-        isRed = true;
+        isRed = red;
         if(isRed){
             GetComponent<Renderer>().material.color = Color.red;
         }else{
