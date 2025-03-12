@@ -6,7 +6,7 @@ public class Ball : MonoBehaviour
     private bool is8ball = false;
     private bool isCueBall = false;
 
-    public bool isBallRed(){
+    public bool IsBallRed(){
         return isRed;
     }
 
@@ -14,7 +14,7 @@ public class Ball : MonoBehaviour
         return isCueBall;
     }
 
-    public bool IsEigthBall(){
+    public bool IsEightBall(){
         return is8ball;
     }
 

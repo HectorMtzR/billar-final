@@ -54,7 +54,7 @@ public class GameSetup : MonoBehaviour
 
         void PlaceBlueBall(Vector3 position){
             GameObject ball = Instantiate(ballPrefab, position, Quaternion.identity);
-            ball.GetComponent<Ball>().BallSetup(true);
+            ball.GetComponent<Ball>().BallSetup(false);
             blueBallsRemaining--;
         }
 

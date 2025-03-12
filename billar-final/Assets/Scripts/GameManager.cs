@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,8 +22,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject restartButton;
     [SerializeField] Transform headPosition;
 
-    void start(){
+    void Start(){
         currentPlayer = CurrentPlayer.Player1;
+    }
+
+    public void RestartTheGame(){
+        SceneManager.LoadScene(0);
     }
 
     bool Scratch(){
@@ -85,6 +90,7 @@ public class GameManager : MonoBehaviour
             //All other logic when not eigth ball or cue ball
             if(ball.IsBallRed()){
                 player1BallsRemaining--;
+                player1BallsText.text = "Player 1 Balls Remaining: " + player1BallsRemaining;
                 if(player1BallsRemaining<=0){
                     isWinningShotForPlayer1 = true;
                 }
@@ -93,6 +99,7 @@ public class GameManager : MonoBehaviour
                 }
             }else{
                 player2BallsRemaining--;
+                player2BallsText.text = "Player 2 Balls Remaining: " + player2BallsRemaining;
                 if(player2BallsRemaining<=0){
                     isWinningShotForPlayer2 = true;
                 }
@@ -104,37 +111,41 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
-    void Lose(string message){
-        messageText.GameObject.SetActive(true);
+    void Lose(string message) {
+        messageText.gameObject.SetActive(true);
         messageText.text = message;
         restartButton.SetActive(true);
     }
 
-    void Win(string player){
-        messageText.GameObject.SetActive(true);
+    void Win(string player) {
+        messageText.gameObject.SetActive(true);
         messageText.text = player + " Has Won!";
-        restartButton.SetActive(true);
+        restartButton.gameObject.SetActive(true);
     }
 
-    void NextPlayerTurn(){
-        if(currentPlayer == CurrentPlayer.Player1){
+
+    void NextPlayerTurn() {
+        if (currentPlayer == CurrentPlayer.Player1) {
             currentPlayer = CurrentPlayer.Player2;
             currentTurnText.text = "Current Turn: Player 2";
-        }else{
-            currentPlayer = CurrentPlayer.Player2;
-            currentTurnText.text = "Current Turn: Player1";
+        } else {
+            currentPlayer = CurrentPlayer.Player1;
+            currentTurnText.text = "Current Turn: Player 1";
         }
     }
 
-    private void OnTriggerEnter(Collider other){
-        if(other.gameObject.tag == "ball"){
-            if(CheckBall(other.gameObject.GetComponent<Ball>())){
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.tag == "ball") {
+            if (CheckBall(other.gameObject.GetComponent<Ball>())) {
                 Destroy(other.gameObject);
-            }else{
+            } else {
                 other.gameObject.transform.position = headPosition.position;
-                other.gameobject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                other.gameobject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+                other.gameObject.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+                other.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
             }
         }
     }
+
 }
