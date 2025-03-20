@@ -3,8 +3,16 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
     private bool isRed;
-    private bool is8ball = false;
+    private bool is8Ball = false;
     private bool isCueBall = false;
+
+    void Start(){
+
+    }
+
+    void Update(){
+        
+    }
 
     public bool IsBallRed(){
         return isRed;
@@ -15,7 +23,7 @@ public class Ball : MonoBehaviour
     }
 
     public bool IsEightBall(){
-        return is8ball;
+        return is8Ball;
     }
 
     public void BallSetup(bool red){
@@ -32,7 +40,7 @@ public class Ball : MonoBehaviour
     }
 
     public void MakeEightBall(){
-        is8ball = true;
+        is8Ball = true;
         GetComponent<Renderer>().material.color = Color.black;
     }
 

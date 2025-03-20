@@ -7,6 +7,7 @@ public class GameSetup : MonoBehaviour
     int blueBallsRemaining = 7;
     float ballRadius;
     float ballDiameter;
+    float ballDiameterWithBuffer;
 
     [SerializeField] GameObject ballPrefab;
     [SerializeField] Transform cueBallPosition;

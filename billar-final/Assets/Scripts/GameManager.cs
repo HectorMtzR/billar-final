@@ -26,6 +26,10 @@ public class GameManager : MonoBehaviour
         currentPlayer = CurrentPlayer.Player1;
     }
 
+    void Update(){
+
+    }
+
     public void RestartTheGame(){
         SceneManager.LoadScene(0);
     }
@@ -120,7 +124,7 @@ public class GameManager : MonoBehaviour
     void Win(string player) {
         messageText.gameObject.SetActive(true);
         messageText.text = player + " Has Won!";
-        restartButton.gameObject.SetActive(true);
+        restartButton.SetActive(true);
     }
 
 
@@ -134,18 +138,37 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
+    /* Codigo dado por Chat
     private void OnTriggerEnter(Collider other) {
-        if (other.gameObject.tag == "ball") {
-            if (CheckBall(other.gameObject.GetComponent<Ball>())) {
-                Destroy(other.gameObject);
-            } else {
-                other.gameObject.transform.position = headPosition.position;
-                other.gameObject.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
-                other.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-
+        if (other.gameObject.CompareTag("ball")) { // Usar CompareTag en lugar de `==`
+            Ball ball = other.gameObject.GetComponent<Ball>();
+            
+            if (ball != null) {
+                if (CheckBall(ball)) {
+                    Destroy(other.gameObject);
+                } else {
+                    other.gameObject.transform.position = headPosition.position;
+                    other.gameObject.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+                    other.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+                }
             }
         }
     }
+    */
+
+    //Codigo del tutorial
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.tag == "Ball") {
+            if (CheckBall(other.gameObject.GetComponent<Ball>())) {
+                Destroy(other.gameObject);
+            }else{
+                other.gameObject.transform.position = headPosition.position;
+                other.gameObject.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+                other.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+            }
+        }
+    }
+
 
 }
