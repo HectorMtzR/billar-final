@@ -41,10 +41,6 @@ public class CameraController : MonoBehaviour
             transform.RotateAround(cueBall.position, Vector3.up, horizontalInput);
         }
 
-        //Temporary
-
-        //End Temporary
-
         if(Input.GetButtonDown("Fire1") && gameObject.GetComponent<Camera>().enabled){
             
             Vector3 hitDirection = transform.forward;

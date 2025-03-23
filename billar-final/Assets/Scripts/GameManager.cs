@@ -18,10 +18,12 @@ public class GameManager : MonoBehaviour
     bool isWaitingForBallMovementToStop = false;
     bool willSwapPlayers = false;
     bool isGameOver = false;
+    bool ballPocketed = false;
 
     [SerializeField] float shotTimer = 3f;
     private float currentTimer;
     [SerializeField] float movementThereshold;
+
     [SerializeField] TextMeshProUGUI player1BallsText;
     [SerializeField] TextMeshProUGUI player2BallsText;
     [SerializeField] TextMeshProUGUI currentTurnText;
@@ -29,7 +31,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject restartButton;
     [SerializeField] Transform headPosition;
-    
+
     [SerializeField] Camera cueStickCamera;
     [SerializeField] Camera overheadCamera;
     Camera currentCamera;
@@ -42,6 +44,10 @@ public class GameManager : MonoBehaviour
 
     void Update(){
         if(isWaitingForBallMovementToStop && !isGameOver){
+
+            // Logic here to check if balls are moving
+            // When all balls have stopped moving, it can move to the next players turns
+
             currentTimer -= Time.deltaTime;
             if(currentTimer>0){
                 return;
@@ -49,19 +55,21 @@ public class GameManager : MonoBehaviour
 
             bool allStopped = true;
             foreach(GameObject ball in GameObject.FindGameObjectsWithTag("Ball")){
-                if(ball.GetComponent<Rigidbody>().linearVelocity.magnitude <= movementThereshold){
+                if(ball.GetComponent<Rigidbody>().linearVelocity.magnitude >= movementThereshold){
+                    Debug.Log(ball.GetComponent<Rigidbody>().linearVelocity.magnitude);
                     allStopped = false;
                     break;
                 }
             }
             if (allStopped){
                 isWaitingForBallMovementToStop = false;
-                if(willSwapPlayers){
+                if(willSwapPlayers || !ballPocketed){
                     NextPlayerTurn();
                 }else{
                     SwitchCameras();
                 }
                 currentTimer = shotTimer;
+                ballPocketed = false;
             }
         }
     }
@@ -97,6 +105,7 @@ public class GameManager : MonoBehaviour
             }
         }
         
+        willSwapPlayers = true;
         return false;
     }
 
@@ -211,6 +220,7 @@ public class GameManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag == "Ball") {
+            ballPocketed = true;
             if (CheckBall(other.gameObject.GetComponent<Ball>())) {
                 Destroy(other.gameObject);
             }else{
