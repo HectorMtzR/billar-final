@@ -6,12 +6,22 @@ public class Ball : MonoBehaviour
     private bool is8Ball = false;
     private bool isCueBall = false;
 
-    void Start(){
+    Rigidbody rb;
 
+    void Start(){
+        rb = GetComponent<Rigidbody>();
     }
 
     void Update(){
         
+    }
+
+    private void FixedUpdate(){
+        if(rb.linearVelocity.y > 0){
+            Vector3 newVelocity = rb.linearVelocity;
+            newVelocity.y = 0f;
+            rb.linearVelocity = newVelocity;
+        }
     }
 
     public bool IsBallRed(){
