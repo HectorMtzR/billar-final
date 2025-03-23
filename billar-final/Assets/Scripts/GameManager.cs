@@ -198,25 +198,6 @@ public class GameManager : MonoBehaviour
         SwitchCameras();
     }
 
-    /* Codigo dado por Chat
-    private void OnTriggerEnter(Collider other) {
-        if (other.gameObject.CompareTag("ball")) { // Usar CompareTag en lugar de `==`
-            Ball ball = other.gameObject.GetComponent<Ball>();
-            
-            if (ball != null) {
-                if (CheckBall(ball)) {
-                    Destroy(other.gameObject);
-                } else {
-                    other.gameObject.transform.position = headPosition.position;
-                    other.gameObject.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
-                    other.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-                }
-            }
-        }
-    }
-    */
-
-    //Codigo del tutorial
 
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag == "Ball") {
